@@ -1,0 +1,23 @@
+{
+    "name": "pmartin/generators-demo",
+    "authors": [
+        {
+            "name": "Pascal MARTIN",
+            "email": "contact@pascal-martin.fr"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require-dev": {
+        "atoum/atoum": "^2.5"
+    },
+    "require": {},
+    "autoload": {
+        "psr-0": {
+            "Demo":     "src"
+        },
+        "psr-4": {
+            "tests\\":        "tests/src/"
+        }
+    }
+}
