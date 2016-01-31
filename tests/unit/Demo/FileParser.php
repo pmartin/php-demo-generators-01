@@ -7,42 +7,42 @@ use Demo\FileParser as TestedClass;
 class FileParser extends atoum\test
 {
 
-public function testParseFileReturnsAnIterator()
-{
-    $this->object($parser = new TestedClass($this->getEmptySplFileObject()));
+    public function testParseFileReturnsAnIterator()
+    {
+        $this->object($parser = new TestedClass($this->getEmptySplFileObject()));
 
-    // Je veux pouvoir itérer sur ce que me renvoie parseFile.
-    // => j'ai besoin que ce soit un Iterator.
-    // Et je n'ai pas besoin que ce soit spécifiquement un Generator (qui extends Iterator)
-    $this->object($iterator = $parser->parseFile())->isInstanceOf(\Iterator::class);
-}
-
-public function testParseFileIteratorIteratesOverRecords()
-{
-    $this->object($parser = new TestedClass($this->getSplFileObjectWithSeveralRecords()));
-    $this->object($iterator = $parser->parseFile());
-
-    // On a un premier enregistrement
-    $this->object($iterator->current())
-        ->isInstanceOf(\Demo\Record::class);
-
-    // Puis un second
-    $this->variable($iterator->next())
-        ->object($iterator->current())
-        ->isInstanceOf(\Demo\Record::class);
-}
-
-public function ParseFileIteratorIteratesUntilTheEndOfTheFile()
-{
-    $this->object($parser = new TestedClass($this->getSplFileObjectWithSeveralRecords()));
-    $this->object($iterator = $parser->parseFile());
-
-    // On boucle sur toutes les données de l'itérateur ; pas de Fatal, pas d'exception, pas de boucle infinie.
-    // Et toutes les données de l'itérateur sont des Record
-    foreach ($iterator as $record) {
-        $this->object($record)->isInstanceOf(\Demo\Record::class);
+        // Je veux pouvoir itérer sur ce que me renvoie parseFile.
+        // => j'ai besoin que ce soit un Iterator.
+        // Et je n'ai pas besoin que ce soit spécifiquement un Generator (qui extends Iterator)
+        $this->object($iterator = $parser->parseFile())->isInstanceOf(\Iterator::class);
     }
-}
+
+    public function testParseFileIteratorIteratesOverRecords()
+    {
+        $this->object($parser = new TestedClass($this->getSplFileObjectWithSeveralRecords()));
+        $this->object($iterator = $parser->parseFile());
+
+        // On a un premier enregistrement
+        $this->object($iterator->current())
+            ->isInstanceOf(\Demo\Record::class);
+
+        // Puis un second
+        $this->variable($iterator->next())
+            ->object($iterator->current())
+            ->isInstanceOf(\Demo\Record::class);
+    }
+
+    public function ParseFileIteratorIteratesUntilTheEndOfTheFile()
+    {
+        $this->object($parser = new TestedClass($this->getSplFileObjectWithSeveralRecords()));
+        $this->object($iterator = $parser->parseFile());
+
+        // On boucle sur toutes les données de l'itérateur ; pas de Fatal, pas d'exception, pas de boucle infinie.
+        // Et toutes les données de l'itérateur sont des Record
+        foreach ($iterator as $record) {
+            $this->object($record)->isInstanceOf(\Demo\Record::class);
+        }
+    }
 
 
     private function getEmptySplFileObject()
